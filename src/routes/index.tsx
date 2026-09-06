@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteFooter } from "@/components/SiteFooter";
 import {
   MapPin,
   Search,
@@ -204,9 +205,21 @@ function Index() {
 
         <header className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-6">
           <span className="animate-fade-in font-[family-name:var(--font-display)] text-xl font-extrabold tracking-tight text-on-dark">
-            Care<span className="text-primary">Seva</span>
+            Care<span className="text-primary">Seva</span><span className="text-xs text-primary font-bold ml-0.5">™</span>
           </span>
           <nav className="animate-fade-in flex items-center gap-3 sm:gap-6">
+            <Link
+              to="/pricing"
+              className="text-sm font-medium text-on-dark-muted transition-colors hover:text-on-dark"
+            >
+              Pricing
+            </Link>
+            <Link
+              to="/contact"
+              className="text-sm font-medium text-on-dark-muted transition-colors hover:text-on-dark"
+            >
+              Contact
+            </Link>
             <a
               href="#partners"
               className="hidden text-sm font-medium text-on-dark-muted transition-colors hover:text-on-dark sm:block"
@@ -552,59 +565,7 @@ function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-border bg-card">
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-6">
-            <div className="lg:col-span-2">
-              <span className="font-[family-name:var(--font-display)] text-2xl font-extrabold tracking-tight">
-                Care<span className="text-primary">Seva</span>
-              </span>
-              <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-                Care, closer to you. Find hospitals, skip the queue and keep your records safe.
-              </p>
-              <div className="mt-6 flex gap-3">
-                <a
-                  href="#get-app"
-                  className="hover-scale inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-xs font-bold"
-                >
-                  <Apple className="size-4" aria-hidden /> iOS
-                </a>
-                <a
-                  href="#get-app"
-                  className="hover-scale inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-xs font-bold"
-                >
-                  <Play className="size-4" aria-hidden /> Android
-                </a>
-              </div>
-            </div>
-            {footerLinks.map(({ title, links }) => (
-              <div key={title}>
-                <h3 className="text-sm font-bold">{title}</h3>
-                <ul className="mt-4 space-y-3">
-                  {links.map((l) => (
-                    <li key={l}>
-                      <a
-                        href="#get-app"
-                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                      >
-                        {l}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-8 text-sm text-muted-foreground">
-            <span>© {new Date().getFullYear()} CareSeva Health Technologies Pvt. Ltd.</span>
-            <span className="inline-flex items-center gap-2">
-              <ShieldCheck className="size-4 text-primary" aria-hidden /> Health data encrypted &
-              ABDM-ready
-            </span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
