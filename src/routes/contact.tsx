@@ -19,10 +19,56 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "Appointment / Booking Inquiry",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/softkrestinfotech@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          _subject: `CareSeva Website Inquiry: ${formData.subject} - ${formData.name}`,
+          _template: "table",
+          Name: formData.name,
+          Email: formData.email,
+          Phone: formData.phone || "Not provided",
+          Subject: formData.subject,
+          Message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        setError("Failed to send message. Please try again or email us directly at softkrestinfotech@gmail.com");
+      }
+    } catch {
+      setError("Network error. Please try again or email us directly.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -110,12 +156,21 @@ function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 text-sm">
+                {error && (
+                  <div className="rounded-xl border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive">
+                    {error}
+                  </div>
+                )}
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1">Your Name</label>
                   <input
                     required
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    disabled={loading}
                     placeholder="Enter your full name"
-                    className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-xs outline-none focus:border-primary"
+                    className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-xs outline-none focus:border-primary disabled:opacity-50"
                   />
                 </div>
                 <div>
@@ -123,26 +178,40 @@ function ContactPage() {
                   <input
                     type="email"
                     required
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    disabled={loading}
                     placeholder="you@example.com"
-                    className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-xs outline-none focus:border-primary"
+                    className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-xs outline-none focus:border-primary disabled:opacity-50"
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1">Phone Number</label>
                   <input
                     type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    disabled={loading}
                     placeholder="+91 98765 43210"
-                    className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-xs outline-none focus:border-primary"
+                    className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-xs outline-none focus:border-primary disabled:opacity-50"
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1">Subject / Inquiry Type</label>
-                  <select className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-xs outline-none focus:border-primary">
-                    <option>Appointment / Booking Inquiry</option>
-                    <option>Payment & Refund Support</option>
-                    <option>Hospital / Doctor Partnership</option>
-                    <option>Technical Support / App Issue</option>
-                    <option>Other Feedback</option>
+                  <select
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    disabled={loading}
+                    className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-xs outline-none focus:border-primary disabled:opacity-50"
+                  >
+                    <option value="Appointment / Booking Inquiry">Appointment / Booking Inquiry</option>
+                    <option value="Payment & Refund Support">Payment & Refund Support</option>
+                    <option value="Hospital / Doctor Partnership">Hospital / Doctor Partnership</option>
+                    <option value="Technical Support / App Issue">Technical Support / App Issue</option>
+                    <option value="Other Feedback">Other Feedback</option>
                   </select>
                 </div>
                 <div>
@@ -150,15 +219,21 @@ function ContactPage() {
                   <textarea
                     required
                     rows={4}
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    disabled={loading}
                     placeholder="How can we help you?"
-                    className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-xs outline-none focus:border-primary"
+                    className="w-full rounded-xl border border-input bg-background px-3.5 py-2.5 text-xs outline-none focus:border-primary disabled:opacity-50"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-primary-foreground hover:opacity-90 flex items-center justify-center gap-2 transition-opacity"
+                  disabled={loading}
+                  className="w-full rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-primary-foreground hover:opacity-90 flex items-center justify-center gap-2 transition-opacity disabled:opacity-50 cursor-pointer"
                 >
-                  <Send className="size-3.5" /> Submit Inquiry
+                  <Send className="size-3.5" />
+                  {loading ? "Sending..." : "Submit Inquiry"}
                 </button>
               </form>
             )}
