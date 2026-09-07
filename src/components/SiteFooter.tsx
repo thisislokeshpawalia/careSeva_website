@@ -8,9 +8,9 @@ export function SiteFooter() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <Link to="/" className="font-[family-name:var(--font-display)] text-2xl font-extrabold tracking-tight">
-              Care<span className="text-primary">Seva</span>
-              <span className="text-xs text-primary font-bold ml-1">™</span>
+            <Link to="/" className="flex items-center gap-2 font-[family-name:var(--font-display)] text-2xl font-extrabold tracking-tight">
+              <img src="/logo.png" alt="CareSeva Logo" className="h-8 w-auto" />
+              <span>Care<span className="text-primary">Seva</span><span className="text-xs text-primary font-bold ml-1">™</span></span>
             </Link>
             <p className="mt-3 max-w-sm text-sm text-muted-foreground leading-relaxed">
               CareSeva is an integrated healthcare & OPD queue management platform connecting patients with hospitals, verified doctors, and digital health records.
