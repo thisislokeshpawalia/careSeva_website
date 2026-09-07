@@ -220,12 +220,12 @@ function Index() {
             >
               Contact
             </Link>
-            <a
-              href="#partners"
+            <Link
+              to="/contact"
               className="hidden text-sm font-medium text-on-dark-muted transition-colors hover:text-on-dark sm:block"
             >
               Add Hospital
-            </a>
+            </Link>
             <a
               href="#get-app"
               className="rounded-full border border-on-dark/40 px-5 py-2 text-sm font-medium text-on-dark backdrop-blur-sm transition-colors hover:bg-on-dark/10"
@@ -506,14 +506,14 @@ function Index() {
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <a
-                href="#partners"
+              <Link
+                to="/contact"
                 className="gradient-cta rounded-xl px-7 py-3 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90"
               >
                 Add your hospital
-              </a>
+              </Link>
               <a
-                href="#partners"
+                href="tel:9369309644"
                 className="inline-flex items-center gap-2 rounded-xl border border-border px-7 py-3 text-sm font-bold transition-colors hover:bg-muted"
               >
                 <Phone className="size-4" aria-hidden /> Talk to sales
