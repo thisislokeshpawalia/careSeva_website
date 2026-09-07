@@ -89,7 +89,7 @@ function PricingPage() {
                 Custom Plans <span className="text-sm font-normal text-muted-foreground">/ per clinic or hospital</span>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                Complete digital reception, doctor dashboard, queue TV displays, and admissions system.
+                Complete digital reception, doctor dashboard, queue displays, and admissions system.
               </p>
 
               <div className="mt-6 space-y-3 text-xs text-muted-foreground">
